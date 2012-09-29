@@ -1,7 +1,4 @@
-{
-	"irc": {
-		"server":	"irc.freenode.net",
-		"nick":		"BOT_NAME",
+ck":		"BOT_NAME",
 		"identUser":	"USER_NAME",
 		"identPass":	"USER_PASS",
 		"debug":	FALSE,
