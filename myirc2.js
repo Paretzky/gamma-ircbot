@@ -36,6 +36,8 @@ console.log("Listening on: " + config.pipePath);
 spawn("node",["./proxy.js"]);
 spawn("node",["./plugins/auth.js"]);
 spawn("node",["./plugins/regex.js"]);
+spawn("node",["./plugins/logging.js"])
+spawn("node",["./plugins/youtube.js"])
 //sa.stderr.on("data", function(d) {
 ///  console.log('stderr: ' + d);
 //});
