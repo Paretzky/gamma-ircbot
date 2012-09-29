@@ -1,16 +1,17 @@
 {
 	"irc": {
 		"server":	"irc.freenode.net",
-		"nick":		"botNick",
-		"identUser":	"user",
-		"identPass":	"pass",
-		"debug":	true,
+		"nick":		"BOT_NAME",
+		"identUser":	"USER_NAME",
+		"identPass":	"USER_PASS",
+		"debug":	FALSE,
 		"realName":	"paretzky's node.js irc bot",
-		"channels":	["#channel","#goes","#here"] 
+		"channels":	["#CHANNELS"]
 	},
 	"sqlite": {
+		"path":		"myirc2.sqlite",
 		"verbose":	false
 	},
 	"pipePath":	"./irchelper.pipe",
-	"plugins":	["logging","tell"]
+	"plugins":	["logging","tell","youtube","regex"]
 }
