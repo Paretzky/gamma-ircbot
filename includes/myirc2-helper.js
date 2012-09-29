@@ -32,13 +32,11 @@ exports.getStream = function() {
 		emitStream.toStream(output).pipe(JSONStream.stringify()).pipe(net.connect(exports.config.pipePath));
 		stream = {input:input,output:output,
 				emit: function() {
-					console.log(arguments);
 					for(var i = 0; i < arguments.length; i++) {
 						if(i>0) {
-							arguments[i] = arguments[i];
+							arguments[i] = escape(arguments[i]);
 						}
 					}
-					console.log(arguments);
 					return output.emit.apply(output,arguments);
 				},
 				on: function() {
