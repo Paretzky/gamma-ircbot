@@ -1,2 +1,0 @@
-paretzky-node-ircbot
-====================

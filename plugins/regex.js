@@ -8,7 +8,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
-	if(text.match(/^s\//) != null) {
+	if(prev.hasOwnProperty(to) && text.match(/^s\//) != null) {
 		stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with " + text + " on " + prev[to]);
 		text = text.substring(2);
 		var find = [];
@@ -60,7 +60,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 			return; 
 		}
 		stream.emit("log",LOG_PREFIX+"Completed " + text);
-		stream.emit("client.say",to,escape(prev[to].replace(r,replacement.join(""))));
+		stream.emit("client.say",to,prev[to].replace(r,replacement.join("")));
 		return;
 	}
 	prev[to] = text;
