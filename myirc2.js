@@ -27,6 +27,7 @@ var server = (function() {
 		input.on("irc.raw",function(m) { ev.emit("irc.raw",m); });
 		input.on("client.say",function(to,text) { ev.emit("client.say",to,text);});
 		input.on("client.join",function(channel) { ev.emit("client.join",channel);});
+		input.on("client.part",function(channel) { ev.emit("client.part",channel);});
 		input.on("log",function(line) { console.log(unescape(line)); });
 	});
 	retVal.ev = ev;
@@ -41,6 +42,7 @@ spawn("node",["./plugins/logging.js"]);
 spawn("node",["./plugins/youtube.js"]);
 spawn("node",["./plugins/tell.js"]);
 spawn("node",["./plugins/googl.js"]);
+spawn("node",["./plugins/qalc.js"]);
 //sa.stderr.on("data", function(d) {
 ///  console.log('stderr: ' + d);
 //});
