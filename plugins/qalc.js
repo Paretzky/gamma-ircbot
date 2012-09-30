@@ -9,14 +9,16 @@ stream.on("irc.message", function(nick,to,text,message) {
 	to = unescape(to);
 	text = unescape(text);
 	if(to.substring(0,1) == "#") {
-		if(text.match(/^\@calc\s\w+/) != null) {
-			var maths = text.split(/\s+/).splice(1).join(" ");
+		if(text.match(/^\@calc\s/) != null) {
+			var maths = text.split(/\s+/).splice(1).join(" ").trim();
+			stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with expression: " + maths);
 			var p = spawn("qalc",["-t", maths],{ stdio: "pipe" });
 			p.stdout.on("data",function(d) {
-				stream.emit("client.say",to,d.toString());
+				stream.emit("log",LOG_PREFIX + "Finished with expression: " + maths);
+				stream.emit("client.say",to,d.toString().trim());
 			});
 			p.stderr.on("data",function(d) {
-				console.log("err:"+d.toString());
+				//stream.emit("log",LOG_PREFIX + "Error: " + d.toString());
 			});
 		}
 	}
