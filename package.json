@@ -1,0 +1,21 @@
+{
+  "name": "myirc2",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "main": "myirc2.js",
+  "dependencies": {
+    "JSONStream": "~0.4.2",
+    "emit-stream": "~0.1.0",
+    "irc": "~0.3.4",
+    "sqlite3": "~2.1.5",
+    "youtube-feeds": "~1.0.3",
+    "goo.gl": "0.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD"
+}

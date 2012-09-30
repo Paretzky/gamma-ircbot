@@ -1,0 +1,17 @@
+{
+	"irc": {
+		"server":	"irc.freenode.net",
+		"nick":		"YOUR NICK",
+		"identUser":	"USER",
+		"identPass":	"PASS",
+		"debug":	true,
+		"realName":	"paretzky's node.js irc bot",
+		"channels":	["#CHANNEL"]
+	},
+	"sqlite": {
+		"path":		"myirc2.sqlite",
+		"verbose":	false
+	},
+	"pipePath":	"./irchelper.pipe",
+	"googleapikey":		"YOUR KEY HERE BUT FOR NOW ONLY FOR plugin/googl.js"
+}
