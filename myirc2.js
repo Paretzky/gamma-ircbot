@@ -43,6 +43,7 @@ spawn("node",["./plugins/youtube.js"]);
 spawn("node",["./plugins/tell.js"]);
 spawn("node",["./plugins/googl.js"]);
 spawn("node",["./plugins/qalc.js"]);
+spawn("node",["./plugins/vimeo.js"]);
 //sa.stderr.on("data", function(d) {
 ///  console.log('stderr: ' + d);
 //});
