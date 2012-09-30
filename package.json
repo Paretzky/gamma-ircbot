@@ -9,7 +9,8 @@
     "irc": "~0.3.4",
     "sqlite3": "~2.1.5",
     "youtube-feeds": "~1.0.3",
-    "goo.gl": "0.0.2"
+    "goo.gl": "0.0.2",
+    "vimeo": "~0.1.6"
   },
   "devDependencies": {},
   "scripts": {
