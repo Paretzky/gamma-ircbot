@@ -17,7 +17,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 			if(res != null) {
 				res = res[0];
 				stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
-				stream.emit("client.say",to,"\"" + res.title + "\" uploaded by " + res.user_name);
+				stream.emit("client.say",to,"\"" + res.title + "\" (" + myirc2.secToString(res.duration) + ") uploaded by " + res.user_name);
 			}
 		});
 	}

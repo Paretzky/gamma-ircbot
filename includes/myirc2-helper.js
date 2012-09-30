@@ -46,3 +46,14 @@ exports.getStream = function() {
 	}
 	return stream;
 };
+exports.secToString = function(s) {
+	var i = 0;
+	while(s >= 60) {
+		i++;
+		s -= 60;
+	}
+	if(s == 0) {
+		return i+"m";
+	}
+	return i+"m"+s+"s";
+}
