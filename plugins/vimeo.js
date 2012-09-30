@@ -12,8 +12,8 @@ stream.on("irc.message",function(nick,to,text,message) {
 	var m = text.indexOf("vimeo.com\/");
 	if(m != -1) {
 		text = text.substring(m).split(/\s+/)[0];
-		text = text.split(/\//).splice(-1);
-		vimeo.video(text,function(err,res) {
+		var text2 = text.split(/\//).splice(-1);
+		vimeo.video(text2,function(err,res) {
 			if(res != null) {
 				res = res[0];
 				stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
