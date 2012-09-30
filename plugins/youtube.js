@@ -17,7 +17,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 				return;
 			}
 			stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
-			stream.emit("client.say",to,"\"" + d.title + "\" uploaded by " + d.uploader);
+			stream.emit("client.say",to,"\"" + d.title + "\" (" + secToString(d.duration) + ") uploaded by " + d.uploader);
 		});
 	}
 	m = text.indexOf("youtu.be\/");
@@ -29,7 +29,18 @@ stream.on("irc.message",function(nick,to,text,message) {
 				return;
 			}
 			stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
-			stream.emit("client.say",to,"\"" + d.title + "\" uploaded by " + d.uploader);
+			stream.emit("client.say",to,"\"" + d.title + "\" (" + secToString(d.duration) + ") uploaded by " + d.uploader);
 		});
 	}
 });
+function secToString(s) {
+	var i = 0;
+	while(s >= 60) {
+		i++;
+		s -= 60;
+	}
+	if(s == 0) {
+		return i+"m";
+	}
+	return i+"m"+s+"s";
+}
