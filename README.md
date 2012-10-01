@@ -19,7 +19,7 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   * Independent of other logging, will monitor the last thing said in a channel to apply for the command below:
   * s/findExp/replaceString - Will globally replace findExp using a native Javascript RegExp expression with replaceString.
 * Leave messages for when someone joins or becomes active in a channel. (plugins/tell.js)
-  * Back by sqlite3
+  * Backed by sqlite3
   * @tell user message - Will repeat your message to user when they next join or say something in the current channel.
 * Vimeo link previews (plugins/vimeo.js)
 * Youtube link previews (plugins/youtube.js)
