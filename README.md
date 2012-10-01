@@ -21,6 +21,7 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   *  @rand user - Will return a random quote by user in the current channel
 * Qalculate Interface (plugins/qalc.js)
   * @calc expression - Will return Qalculates output for expression
+  * For additional details see <http://qalculate.sourceforge.net/>
 * Regular Expressions (plugins/regex.js)
   * Independent of other logging, will monitor the last thing said in a channel to apply for the command below:
   * s/findExp/replaceString - Will globally replace findExp using a native Javascript RegExp expression with replaceString.
