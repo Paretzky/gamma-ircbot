@@ -23,3 +23,11 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   * @tell user message - Will repeat your message to user when they next join or say something in the current channel.
 * Vimeo link previews (plugins/vimeo.js)
 * Youtube link previews (plugins/youtube.js)
+
+## Plugin Management 
+
+Plugins are all run in their own processes.  Currently to stop a plugin you'll want to send a SIGINT (ctrl+c) or SIGKILL kill -9.  
+
+By design everything will just unhook from the main process and reconnect once you restart.  Make sure you're currently in /PATH/TO/paretzky-node-ircbot/ as your present working directory.  Run node plugins/name.js for each plugin to restart.
+
+To see what plugins are running, you have two options.  Check the main myirc2.js log to see what was started.  Or just run ps and grep for the children of node myirc2.js.
