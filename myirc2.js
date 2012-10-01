@@ -44,6 +44,7 @@ spawn("node",["./plugins/tell.js"]);
 spawn("node",["./plugins/googl.js"]);
 spawn("node",["./plugins/qalc.js"]);
 spawn("node",["./plugins/vimeo.js"]);
+spawn("node",["./plugins/wiki.js"]);
 //sa.stderr.on("data", function(d) {
 ///  console.log('stderr: ' + d);
 //});
