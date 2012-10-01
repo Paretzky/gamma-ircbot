@@ -32,3 +32,7 @@ Plugins are all run in their own processes.  Currently to stop a plugin you'll w
 By design everything will just unhook from the main process and reconnect once you restart.  Make sure you're currently in /PATH/TO/paretzky-node-ircbot/ as your present working directory.  Run node plugins/name.js for each plugin to restart.
 
 To see what plugins are running, you have two options.  Check the main myirc2.js log to see what was started.  Or just run ps and grep for the children of node myirc2.js.
+
+### Misc. Notes
+
+You'll have to remove irchelper.pipe after each run of myirc2.js.  It is the main communication channel between the plugins and various parts of this program and must not exist when first running myirc2.js.
