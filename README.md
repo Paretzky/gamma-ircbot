@@ -2,7 +2,7 @@
 
 Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, targeting the freenode.net irc network.
 
-## Features
+### Features
 * Authentication with NickServ (plugins/auth.js)
 * Command line access to all functionality (plugins/cmd.js)
   * Client commands to interact with irc
@@ -24,7 +24,7 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
 * Vimeo link previews (plugins/vimeo.js)
 * Youtube link previews (plugins/youtube.js)
 
-## Plugin Management 
+### Plugin Management 
 
 Plugins are all run in their own processes.  Currently to stop a plugin you'll want to send a SIGINT (ctrl+c) or SIGKILL kill -9.  
 
