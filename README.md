@@ -8,6 +8,7 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   * Client commands to interact with irc
     * client.say #channel message
     * client.join #channel
+    * client.part #channel
 * Goo.gl link unshortening (plugins/googl.js)
 * Logging (plugins/logging.js)
   *  Backed by sqlite3
