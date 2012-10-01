@@ -1,8 +1,8 @@
-# Ben Paretzky's IRC Bot
+## paretzky-node-ircbot
 
 Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, targeting the freenode.net irc network.
 
-## Features
+### Features
 * Authentication with NickServ (plugins/auth.js)
 * Command line access to all functionality (plugins/cmd.js)
   * Client commands to interact with irc
@@ -20,12 +20,12 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   * Independent of other logging, will monitor the last thing said in a channel to apply for the command below:
   * s/findExp/replaceString - Will globally replace findExp using a native Javascript RegExp expression with replaceString.
 * Leave messages for when someone joins or becomes active in a channel. (plugins/tell.js)
-  * Back by sqlite3
+  * Backed by sqlite3
   * @tell user message - Will repeat your message to user when they next join or say something in the current channel.
 * Vimeo link previews (plugins/vimeo.js)
 * Youtube link previews (plugins/youtube.js)
 
-## Plugin Management 
+### Plugin Management 
 
 Plugins are all run in their own processes.  Currently to stop a plugin you'll want to send a SIGINT (ctrl+c) or SIGKILL kill -9.  
 
