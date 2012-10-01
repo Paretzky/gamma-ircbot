@@ -29,6 +29,8 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   * @tell user message - Will repeat your message to user when they next join or say something in the current channel.
 * Vimeo link previews (plugins/vimeo.js)
 * Youtube link previews (plugins/youtube.js)
+* Wikipedia lookups
+  * @wiki search terms - Will give a link give a brief except and link to the specified article
 
 ### Plugin Management 
 
