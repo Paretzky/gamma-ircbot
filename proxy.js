@@ -9,12 +9,18 @@ stream.on("client.join",function(channel) {
 	stream.emit("log",LOG_PREFIX + "JOIN\t" +  channel);
 	client.join(channel);
 });
+stream.on("client.part",function(channel) {
+	channel = unescape(channel);	
+	stream.emit("log",LOG_PREFIX + "PART\t" +  channel);
+	client.part(channel);
+});
 stream.on("client.say",function(to,text) {
 	to = unescape(to);
 	text = unescape(text);
 	stream.emit("log",LOG_PREFIX + "SAY\t" +  to + "\t" + text);
 	client.say(to,text);
 });
+
 var client = new irc.Client(config.irc.server,config.irc.nick, {debug:config.irc.debug,realName:config.irc.realName});
 client.on("registered", function(m) {
 	m = unescape(m);
