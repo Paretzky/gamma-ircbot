@@ -14,13 +14,14 @@ stream.on("irc.message", function(nick,to,text,message) {
 			var maths = text.split(/\s+/).splice(1).join(" ").trim();
 			stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with expression: " + maths);
 			var p = spawn("qalc",["-t", maths],{ stdio: "pipe" });
-			setTimeout(function(){
+			var toID = setTimeout(function(){
 				p.kill('SIGKILL');
 				stream.emit("log", LOG_PREFIX+"Query timed out: " + maths);
 				stream.emit("client.say",to,"Query timed out: " + maths);
 			},timeoutInS*1000);
 	
 			p.stdout.on("data",function(d) {
+				clearTimeout(toID);
 				stream.emit("log",LOG_PREFIX + "Finished with expression: " + maths);
 				stream.emit("client.say",to,d.toString().trim());
 			});
