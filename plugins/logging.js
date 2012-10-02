@@ -45,5 +45,8 @@ stream.on("irc.message", function(nick,to,text,message) {
 			});
 		}
 	}
+	if(to.match(/^nickserv$/i) != null && text.match(/^\s*identify\s+/i) != null) {
+		return;
+	} 
 	db.run("INSERT INTO loggingPlugin VALUES(?, ?, datetime('now','localtime'), ?)", nick, to, text);
 });

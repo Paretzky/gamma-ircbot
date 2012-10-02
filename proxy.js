@@ -17,7 +17,11 @@ stream.on("client.part",function(channel) {
 stream.on("client.say",function(to,text) {
 	to = unescape(to);
 	text = unescape(text);
-	stream.emit("log",LOG_PREFIX + "SAY\t" +  to + "\t" + text);
+	if(to.match(/^nickserv$/i) != null && text.match(/^\s*identify\s+/i) != null) {
+		stream.emit("log",LOG_PREFIX + "SAY\t" +  to + "\tidentify *******");
+	} else {
+		stream.emit("log",LOG_PREFIX + "SAY\t" +  to + "\t" + text);
+	}
 	client.say(to,text);
 });
 
