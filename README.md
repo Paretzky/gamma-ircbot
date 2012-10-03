@@ -1,4 +1,4 @@
-## paretzky-node-ircbot
+## node-ircbot
 
 Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, targeting the freenode.net irc network.
 
