@@ -22,6 +22,8 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
 * Qalculate Interface (plugins/qalc.js)
   * @calc expression - Will return Qalculates output for expression
   * For additional details see <http://qalculate.sourceforge.net/>
+  * Qalculate supports the following currencies ATS BEF DEM eurocents € FIM FRF GRD IEP ITL LUF PTE ESP
+  * The manual for Qalculate can be found at <http://qalculate.sourceforge.net/gtk-manual/index.html>
 * Regular Expressions (plugins/regex.js)
   * Independent of other logging, will monitor the last thing said in a channel to apply for the command below:
   * s/findExp/replaceString - Will globally replace findExp using a native Javascript RegExp expression with replaceString.
