@@ -10,7 +10,7 @@ db.get("SELECT name FROM sqlite_master WHERE name='loggingPlugin'", function(err
 		db.run("CREATE TABLE loggingPlugin (fromNick char(128) COLLATE NOCASE,  toNick char(128) COLLATE NOCASE, ts timestamp, message text)",function(e) {
 			if(e == null) {
 				stream.emit("log",LOG_PREFIX + "Created new database table 'loggingPlugin'");
-				db.run("CREATE INDEX loggingPlugin_toNick ON loggingPlugin(fromNick,toNick);",function(e2) {
+				db.run("CREATE INDEX loggingPlugin_index ON loggingPlugin(fromNick,toNick);",function(e2) {
 					if(e2 == null) {
 						stream.emit("log",LOG_PREFIX + "Created new database index on 'loggingPlugin(fromNick,toNick)'");
 					} else {
