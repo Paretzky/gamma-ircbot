@@ -40,6 +40,7 @@ var parseMessage =  function(nick,to,text,message) {
 				stream.emit("log", LOG_PREFIX+nick+" left a message for "+tellTo+" in "+nick);
 				db.run("INSERT OR REPLACE INTO tellPlugin VALUES(?,?,?,datetime('now','localtime'),?)",nick,tellTo,to,tellMsg);
 				stream.emit("client.say",to,"I'll tell " + tellTo + " next time they join or talk");
+				return;
 			}
 		}
 		db.all("SELECT *,rowid FROM tellPlugin WHERE channel=? AND toNick=?",to,nick,function(err,row) {
