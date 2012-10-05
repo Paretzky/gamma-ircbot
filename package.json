@@ -10,7 +10,8 @@
     "sqlite3": "~2.1.5",
     "youtube-feeds": "~1.0.3",
     "goo.gl": "0.0.2",
-    "vimeo": "~0.1.6"
+    "vimeo": "~0.1.6",
+    "jsdom": "~0.2.15"
   },
   "devDependencies": {},
   "scripts": {
