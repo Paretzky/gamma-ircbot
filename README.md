@@ -20,10 +20,18 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
   *  Logs all messages in the channels you're in
   *  @rand user - Will return a random quote by user in the current channel
 * Qalculate Interface (plugins/qalc.js)
-  * @calc (PRECISION) expression - Will return Qalculates output for expression.  (PRECISION) is an optional arguement taking the form /\d+(p|P)/, for which the p is removed and the remaining number is passed to qalculate as the precision.
+  * @calc \[args\] expression - Will return Qalculates output for expression.
+    * args are options passed to qalculate taking the form \[:digit:\]+\w
+    * If duplicates are found, the last will be used.  ex.  2b16b10b will use base-10
+    *  b|B for Base, defaults to 10 
+      *  ex. 2b for binary
+    *  p|P for Precision, defaults to 8
+      * ex. 4p 1/3 = 0.3333
     * Examples:
-      * @calc pi  --  Will return pi using qalculate's default precision
+      * @calc pi  --  Will return pi using the default precision
       * @calc 200p pi -- Will return pi to 200 digits
+      * @calc 2b 3 -- Will return 11
+      * @calc 16b5p 1/3 -- Will return 0x0.5555
   * For additional details see <http://qalculate.sourceforge.net/>
   * Qalculate supports the following currencies ATS BEF DEM eurocents € FIM FRF GRD IEP ITL LUF PTE ESP
   * The manual for Qalculate can be found at <http://qalculate.sourceforge.net/gtk-manual/index.html>

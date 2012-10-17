@@ -12,14 +12,26 @@ stream.on("irc.message", function(nick,to,text,message) {
 	if(to.substring(0,1) == "#") {
 		if(text.match(/^\@calc\s/) != null) {
 			var maths = text.split(/\s+/).splice(1);
-			var prec = 5;
-			if(maths[0].match(/^\d+(p|P)$/)  != null) {
-				prec = maths[0].substring(0,maths[0].length - 1);
-				maths = maths.splice(1);
+			var prec = 8;
+			var base = 10;
+			var count = 0;
+			maths[0].replace(/\d+(p|P|b|B)/g,function() {
+				if(arguments[0].match(/P|p$/) != null) {
+					count++;
+					prec = arguments[0].substring(0,arguments[0].length - 1);
+					return "";
+				}
+				if(arguments[0].match(/B|b$/) != null) {
+					count++;
+					base = arguments[0].substring(0,arguments[0].length - 1);
+					return "";
+				}
+			});
+			if(count > 0) {
+				maths = maths.splice(1).join(" ");
 			}
-			maths = maths.join(" ");
-			stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with expression: " + maths);
-			var p = spawn("qalc",["-t", "-set", "PRECISION\ " + prec, maths],{ stdio: "pipe" });
+			stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with args: " + base+"b"+prec+"p" + "  expression: " + maths);
+			var p = spawn("qalc",["-t", "-set", "PRECISION\ " + prec, "-set", "BASE " + base, maths],{ stdio: "pipe" });
 			var toID = setTimeout(function(){
 				p.kill('SIGKILL');
 				stream.emit("log", LOG_PREFIX+"Query timed out: " + maths);
