@@ -28,10 +28,12 @@ stream.on("irc.message", function(nick,to,text,message) {
 				}
 			});
 			if(count > 0) {
-				maths = maths.splice(1).join(" ");
+				maths = maths.splice(1);
 			}
+			maths.join(" ");
 			stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with args: " + base+"b"+prec+"p" + "  expression: " + maths);
-			var p = spawn("qalc",["-t", "-set", "PRECISION\ " + prec, "-set", "BASE " + base, maths],{ stdio: "pipe" });
+			var p = spawn("qalc",["-t", "-set", "PRECISION " + prec, "-set", "BASE " + base, maths],{ stdio: "pipe" });
+			//var p = spawn("qalc",["-t", "-set", "PRECISION\ " + prec, "-set", "BASE " + base, maths],{ stdio: "pipe" });
 			var toID = setTimeout(function(){
 				p.kill('SIGKILL');
 				stream.emit("log", LOG_PREFIX+"Query timed out: " + maths);
