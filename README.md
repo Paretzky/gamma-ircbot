@@ -3,7 +3,6 @@
 Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, targeting the freenode.net irc network.
 
 ### Notes about running paretzky-node-irc
-* You'll have to remove irchelper.pipe after each run of myirc2.js.  It is the main communication channel between the plugins and various parts of this program and must not exist when first running myirc2.js.
 * Currently this is only tested on fc1{6,7}.x64
 * plugins/qalc.js depends on Qalculate and "qalc" being in your path
 
