@@ -33,7 +33,7 @@ var server = (function() {
 		input.on("plugin.stop",function(name){
 			if(plugins.hasOwnProperty(name)) {
 				console.log("Stopping plugin: " + name);
-				plugins[name].process.exit();
+				plugins[name].process.kill('SIGKILL');
 			}
 		});
 		input.on("plugin.logstdout",function(name){
@@ -44,8 +44,8 @@ var server = (function() {
 		input.on("plugin.unload",function(name) {
 			if(plugins.hasOwnProperty(name)) {
 				console.log("Unloading plugin: " + name);
-				plugins[name].process.exit();
-				delete plugin[name];
+				plugins[name].process.kill('SIGKILL');
+				delete plugins[name];
 			}
 		});
 		input.on("plugin.start",function(name) {
