@@ -13,5 +13,6 @@
 		"verbose":	false
 	},
 	"pipePath":	"./irchelper.pipe",
-	"googleapikey":		"YOUR KEY HERE BUT FOR NOW ONLY FOR plugin/googl.js"
+	"googleapikey":		"YOUR KEY HERE BUT FOR NOW ONLY FOR plugin/googl.js",
+	"plugins":	["auth","regex","logging","tell","googl","qalc","vimeo","nice"]
 }

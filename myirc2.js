@@ -6,7 +6,7 @@ var emitStream = require('emit-stream');
 var JSONStream = require('JSONStream');
 var EventEmitter = require('events').EventEmitter;
 var spawn = require('child_process').spawn;
-var plugins = [];
+var plugins = {};
 var server = (function() {
 	var ev = new EventEmitter;
 	var retVal = net.createServer({path:config.pipePath},function(c) {
@@ -29,6 +29,29 @@ var server = (function() {
 		input.on("client.join",function(channel) { ev.emit("client.join",channel);});
 		input.on("client.part",function(channel) { ev.emit("client.part",channel);});
 		input.on("log",function(line) { console.log(unescape(line)); });
+		
+		input.on("plugin.stop",function(name){
+			if(plugins.hasOwnProperty(name)) {
+				console.log("Stopping plugin: " + name);
+				plugins[name].process.exit();
+			}
+		});
+		input.on("plugin.logstdout",function(name){
+			if(plugins.hasOwnProperty(name)) {
+				console.log("Got request to log output of plugin: " + name + "\n" + plugins[name].stdout());
+			}
+		});
+		input.on("plugin.unload",function(name) {
+			if(plugins.hasOwnProperty(name)) {
+				console.log("Unloading plugin: " + name);
+				plugins[name].process.exit();
+				delete plugin[name];
+			}
+		});
+		input.on("plugin.start",function(name) {
+			// spawnPlugin checks for only running one instance of a plugin at a time
+			spawnPlugin(name);
+		});
 	});
 	retVal.ev = ev;
 	return retVal;
@@ -61,7 +84,23 @@ server.on("error",function(e) {
 });
 server.listen(config.pipePath);
 console.log("Listening on: " + config.pipePath);
+function spawnPlugin(name) {
+	if(!plugins.hasOwnProperty(name)) {
+		plugins[name] = {
+			process:	spawn("node",["plugins/"+name+".js"],{ stdio: "pipe" }),
+			stdoutData:	[],
+			stdout:		function(){ return this.stdoutData.join(""); }
+		};
+		plugins[name].process.stdout.on("data",function(d) {
+			plugins[name].stdoutData.push(d);
+		});
+	}
+}
 spawn("node",["./proxy.js"]);
+config.plugins.forEach(function(val,index,arr) {
+	spawnPlugin(val);
+});
+/*
 spawn("node",["./plugins/auth.js"]);
 spawn("node",["./plugins/regex.js"]);
 spawn("node",["./plugins/logging.js"]);
@@ -70,3 +109,4 @@ spawn("node",["./plugins/googl.js"]);
 spawn("node",["./plugins/qalc.js"]);
 spawn("node",["./plugins/vimeo.js"]);
 spawn("node",["./plugins/nice.js"]);
+*/

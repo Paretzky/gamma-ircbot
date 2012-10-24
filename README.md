@@ -13,6 +13,11 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
     * client.say #channel message
     * client.join #channel
     * client.part #channel
+  * Plugin management
+    * plugin.stop name - Will cause the process for that plugin to exit.  Existing buffered stdout will stay intact.
+    * plugin.logstdout name - Each plugin's stdout is logged through the entire time it is running.  This will dump all of that to myirc2's stdout.
+    * plugin.unload name - Causes the process for that plugin to exit, all buffers and info associated with the previous run of that plugin are also deleted.
+    * plugin.start name - Starts plugin name, the internal way (Logging std out etc).  You don't need to use this, starting plugins the old way still works.
 * Goo.gl link unshortening (plugins/googl.js)
 * Logging (plugins/logging.js)
   *  Backed by sqlite3
