@@ -33,24 +33,40 @@ var server = (function() {
 	retVal.ev = ev;
 	return retVal;
 })();
+var triedUnlink = false;
+server.on("error",function(e) {
+	if (e.code == "EADDRINUSE") {
+		if(triedUnlink) {
+			return;
+		}
+		console.log("Trying to remove communications pipe: " + config.pipePath);
+		//triedUnlink = true;
+		//fs.unlink(config.pipePath);
+		//Refuses to work for some magical reason, a return status for unlink would be helpful
+		var p = spawn("unlink",[config.pipePath]);
+		p.on("exit",function(code,signal) {
+			if(triedUnlink) {
+				return;
+			}
+			triedUnlink = true;
+			if(code == 0) {
+				console.log("Successfully removed previous pipe, attempting to create new pipe.");
+			} else {
+				console.log("Unable to remove pipe, exiting.");
+				process.exit(4);
+			}
+			server.listen(config.pipePath);
+		});
+	}
+});
 server.listen(config.pipePath);
 console.log("Listening on: " + config.pipePath);
 spawn("node",["./proxy.js"]);
 spawn("node",["./plugins/auth.js"]);
 spawn("node",["./plugins/regex.js"]);
 spawn("node",["./plugins/logging.js"]);
-spawn("node",["./plugins/youtube.js"]);
 spawn("node",["./plugins/tell.js"]);
 spawn("node",["./plugins/googl.js"]);
 spawn("node",["./plugins/qalc.js"]);
 spawn("node",["./plugins/vimeo.js"]);
-spawn("node",["./plugins/wiki.js"]);
-//sa.stderr.on("data", function(d) {
-///  console.log('stderr: ' + d);
-//});
-/*
-var s = spawn("node",["./plugins/auth.js"]);
-s.stderr.on("data", function(d) {
-  console.log('stderr: ' + d);
-});
-*/
+spawn("node",["./plugins/nice.js"]);
