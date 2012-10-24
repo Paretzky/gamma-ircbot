@@ -25,7 +25,7 @@ stream.on("client.say",function(to,text) {
 	client.say(to,text);
 });
 
-var client = new irc.Client(config.irc.server,config.irc.nick, {debug:config.irc.debug,realName:config.irc.realName});
+var client = new irc.Client(config.irc.server,config.irc.nick, {debug:config.irc.debug,realName:config.irc.realName,floodProtection:true,floodProtectionDelay:1250});
 client.on("registered", function(m) {
 	stream.emit("irc.registered",m);
 });
