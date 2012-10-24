@@ -27,86 +27,52 @@ stream.on("client.say",function(to,text) {
 
 var client = new irc.Client(config.irc.server,config.irc.nick, {debug:config.irc.debug,realName:config.irc.realName});
 client.on("registered", function(m) {
-	m = unescape(m);
 	stream.emit("irc.registered",m);
 });
 client.on("motd", function(m) {
-	m = unescape(m);
 	stream.emit("irc.motd",m);
 });
-client.on("names", function(channel,nicks) {
-	channel = unescape(channel);
-	nicks = unescape(nicks);
+client.on("names", function(channel,nicks) {;
 	stream.emit("irc.names",channel,nicks);
 });
 client.on("topic", function(channel,topic,nick,message) {
-	channel = unescape(channel);
-	topic = unescape(topic);
-	nick = unescape(nick);
-	message = unescape(message);
 	stream.emit("irc.topic",channel,topic,nick,message);
 });
 client.on("join", function(channel,nick,message) {
-	channel = unescape(channel);
-	nick = unescape(nick);
-	message = unescape(message);
 	stream.emit("irc.join",channel,nick,message);
 });
 client.on("part", function(channel,nick,reason,message) {
-	channel = unescape(channel);
-	nick = unescape(nick);
-	reason = unescape(reason);
-	message = unescape(message);
 	stream.emit("irc.part",channel,nick,reason,message);
 });
 client.on("quit", function(nick,reason,channels,message) {
-	nick = unescape(nick);
-	reason = unescape(reason);
-	channels = unescape(channels);
-	message = unescape(message);
 	stream.emit("irc.quit",nick,reason,channels,message);
 });
 client.on("kick", function(channel,nick,by,reason,message) {
-	channel = unescape(channel);
-	nick = unescape(nick);
-	by = unescape(by);
-	reason = unescape(reason);
-	message = unescape(message);
+
 	stream.emit("irc.kick",channel,nick,by,reason,message);
 });
 client.on("message", function(nick,to,text,message) {
-	message = unescape(message);
-	message = unescape(message);
-	message = unescape(message);
-	message = unescape(message);
 	stream.emit("irc.message",nick,to,text,message);
 });
 client.on("notice",function (nick, to, text, message) {
-	nick = unescape(nick);
-	to = unescape(to);
-	text = unescape(text);
-	message = unescape(message);
 	stream.emit("log",LOG_PREFIX + "NOTICE:\t" + text);
 	stream.emit("irc.notice",nick,to,text,message);
 });
 client.on("pm",function (nick, text, message) {
-	nick = unescape(nick);
-	text = unescape(text);
-	message = unescape(message);
 	stream.emit("irc.pm",nick,text,message);
 });
 client.on("nick",function (oldnick,newnick,channels,message) {
-	oldnick = unescape(oldnick);
-	newnick = unescape(newnick);
-	channels = unescape(channels);
-	message = unescape(message);
 	stream.emit("irc.nick",oldnick,newnick,channels,message);
 });
 client.on("raw",function(message){
-	message = unescape(message);
+	if(message != null && message != undefined && message.command == "PRIVMSG") {
+		var args = String(message.args).split(",");
+		if(args.length >= 2 && args[1].match(/^\u0001ACTION\s/) != null) {
+			stream.emit("irc.message",message.nick,args[0],message.nick + " " + args[1].replace(/^(\u0001ACTION\s)|\u0001/g,""),message);
+		}
+	}
 	stream.emit("irc.raw",message);
 });
 client.on("error",function(e) {
-	e = unescape(e);
 	stream.emit("log",LOG_PREFIX + e.command);
 });
