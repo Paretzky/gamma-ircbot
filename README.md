@@ -2,7 +2,7 @@
 
 Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, targeting the freenode.net irc network.
 
-### Notes about running paretzky-node-irc
+### Notes about running node-irc
 * Currently this is only tested on fc1{6,7}.x64
 * plugins/qalc.js depends on Qalculate and "qalc" being in your path
 
@@ -62,6 +62,6 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
 
 Plugins are all run in their own processes.  Currently to stop a plugin you'll want to send a SIGINT (ctrl+c) or SIGKILL kill -9.  
 
-By design everything will just unhook from the main process and reconnect once you restart.  Make sure you're currently in /PATH/TO/paretzky-node-ircbot/ as your present working directory.  Run node plugins/name.js for each plugin to restart.
+By design everything will just unhook from the main process and reconnect once you restart.  Make sure you're currently in /PATH/TO/node-ircbot/ as your present working directory.  Run node plugins/name.js for each plugin to restart.
 
 To see what plugins are running, you have two options.  Check the main myirc2.js log to see what was started.  Or just run ps and grep for the children of node myirc2.js.
