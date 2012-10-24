@@ -44,6 +44,14 @@ Aims to be a easy to use, reliable, and close to the metal IRC bot.  For now, ta
 * Youtube link previews (plugins/youtube.js)
 * Wikipedia lookups
   * @wiki search terms - Will give a link give a brief except and link to the specified article
+* Nice
+  * Will respond "Hai $NICK =D" to /(ha?i)|(hello)|(h(e|a)y)/i
+  * Will respond "Thanks $NICK" to /wb.?\s/i, as in Welcome Back
+* Finger
+  * BETA - @finger user - Will look up user on the SUNY Oswego Computer Science Dept. user account system.
+  * More info about the finger(1) command can be found at <http://linux.die.net/man/1/finger>
+* People Search
+  * BETA - @people name - Will look up name with the SUNY Oswego People search HTTP interface.  Currently works for no results, and one result.  Results with more than one answer and not yet supported.
 
 ### Plugin Management 
 
