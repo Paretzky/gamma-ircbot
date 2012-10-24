@@ -6,7 +6,8 @@
 		"identPass":	"PASS",
 		"debug":	true,
 		"realName":	"paretzky's node.js irc bot",
-		"channels":	["#CHANNEL"]
+		"channels":	["#CHANNEL"],
+		"ignore":	{"user1":0,"user2";0}
 	},
 	"sqlite": {
 		"path":		"myirc2.sqlite",
