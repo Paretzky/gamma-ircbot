@@ -30,6 +30,9 @@ var parseMessage =  function(nick,to,text,message) {
 	to = unescape(to);
 	text = unescape(text);
 	message = unescape(message);
+	if(myirc2.pluginBlacklistedInChannel("tell",to)) {
+		return;
+	}
 	if(to.substring(0,1) == "#") {
 		if(text.match(/^\@tell\s/) != null) {
 			var t = text.substring(5).trim();
@@ -57,5 +60,8 @@ var parseMessage =  function(nick,to,text,message) {
 };
 stream.on("irc.message",parseMessage);
 stream.on("irc.join",function(channel,nick,message) {
+	if(myirc2.pluginBlacklistedInChannel("tell",channel)) {
+		return;
+	}
 	parseMessage(nick,channel,undefined,message);
 });

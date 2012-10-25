@@ -8,7 +8,9 @@ stream.on("irc.message",function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
-	if(config.irc.ignore.hasOwnProperty(nick)) { return; }
+	if(myirc2.pluginBlacklistedInChannel("regex",to)) {
+		return;
+	}
 	if(prev.hasOwnProperty(to) && text.match(/^s\//) != null) {
 		stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with " + text + " on " + prev[to]);
 		text = text.substring(2);

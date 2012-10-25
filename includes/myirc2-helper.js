@@ -57,3 +57,9 @@ exports.secToString = function(s) {
 	}
 	return i+"m"+s+"s";
 }
+exports.pluginBlacklistedInChannel = function(plugin, channel) {
+	if(exports.config.pluginBlacklist.hasOwnProperty(channel)) {
+		return exports.config.pluginBlacklist[channel].hasOwnProperty(plugin);
+	}
+	return false;
+}

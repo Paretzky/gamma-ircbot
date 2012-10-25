@@ -8,6 +8,10 @@ stream.on("irc.message", function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
+	console.dir(config);
+	if(myirc2.pluginBlacklistedInChannel("wiki",to)) {
+		return;
+	}
 	if(to.substring(0,1) == "#") {
 		if(text.match(/^\@wiki\s/) != null) {
 			//var query = toWikiCase(text.split(/\s+/).splice(1).join(" ").trim());

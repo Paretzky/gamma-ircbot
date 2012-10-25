@@ -7,6 +7,9 @@ stream.on("irc.message", function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
+	if(myirc2.pluginBlacklistedInChannel("nice",to)) {
+		return;
+	}
 	if(to.substring(0,1) == "#") {
 		if(text.toLowerCase().indexOf(config.irc.nick.toLowerCase()) != -1) {
 			if(text.match(/(ha?i)|(hello)|(h(e|a)y)/i) != null) {

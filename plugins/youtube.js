@@ -9,6 +9,9 @@ stream.on("irc.message",function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
+	if(myirc2.pluginBlacklistedInChannel("youtube",to)) {
+		return;
+	}
 	var m = text.indexOf("youtube.com\/");
 	if(m != -1) {
 		text = text.substring(m).split(/\s+/)[0];

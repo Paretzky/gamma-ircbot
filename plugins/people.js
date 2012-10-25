@@ -10,6 +10,9 @@ stream.on("irc.message", function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
+	if(myirc2.pluginBlacklistedInChannel("people",to)) {
+		return;
+	}
 	if(to.substring(0,1) == "#") {
 		if(text.match(/^\@people\s/) != null) {
 			var parts = [];

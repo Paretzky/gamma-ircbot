@@ -9,6 +9,9 @@ stream.on("irc.message", function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
+	if(myirc2.pluginBlacklistedInChannel("finger",to)) {
+		return;
+	}
 	if(to.substring(0,1) == "#") {
 		if(text.match(/^\@finger\s/) != null) {
 			var maths = text.split(/\s+/).splice(1).join(" ").trim();
