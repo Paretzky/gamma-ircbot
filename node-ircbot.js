@@ -36,6 +36,14 @@ var server = (function() {
 				plugins[name].process.kill('SIGKILL');
 			}
 		});
+		input.on("plugin.reset",function(name){
+			if(plugins.hasOwnProperty(name)) {
+				console.log("Restarting plugin: " + name);
+				console.log("Stopping plugin: " + name);
+				plugins[name].process.kill('SIGKILL');
+				spawnPlugin(name);
+			}
+		});
 		input.on("plugin.logstdout",function(name){
 			if(plugins.hasOwnProperty(name)) {
 				console.log("Got request to log output of plugin: " + name + "\n" + plugins[name].stdout());
