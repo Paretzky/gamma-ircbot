@@ -48,7 +48,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 	m = text.indexOf("youtu.be\/");
 	if(m != -1) {
 		var parts = text.substring(m).split(/\s+/)[0].split("\/");
-		text = parts[parts.length-1];
+		text = parts[parts.length-1].split("?")[0];
 		youtube.video(text, function(d) {
 			if(d == null) {
 				return;
