@@ -20,6 +20,9 @@ stream.on("irc.message", function(nick,to,text,message) {
 				stream.emit("client.say",to,"Thanks " + nick);
 				return;
 			}
+			if(text.match(/thanks?/i) != null) {
+				stream.emit("client.say",to,"You're welcome " + nick + ".");
+			}
 		}
 	}
 });
