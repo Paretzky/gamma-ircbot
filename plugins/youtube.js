@@ -5,6 +5,28 @@ var config = myirc2.config;
 var stream = myirc2.getStream();
 var LOG_PREFIX = "plugins/youtube.js:\t";
 stream.emit("log",LOG_PREFIX + "Starting");
+function formatResult(y) {
+	if(y == null || y == undefined) {
+		return "Unable to get result from Youtube.";
+	}
+	var res = ["\"",y.title,"\" (", myirc2.secToString(y.duration),") uploaded by ",y.uploader];
+	if(y.hasOwnProperty("viewCount")) {
+		res.push(" - ",commaizeInt(y.viewCount)," views");
+	}
+	if(y.hasOwnProperty("likeCount")) {
+		res.push(" - ",commaizeInt(y.likeCount)," likes");
+	}
+	return res.join("");
+	
+}
+function commaizeInt(n) {
+	var s = String(n);
+	if(s.length <= 3) {
+			return s;
+	}
+	// Thanks http://stackoverflow.com/questions/721304/insert-commas-into-number-string
+	return s.replace(/(\d)(?=(\d{3})+$)/g,function(){return arguments[0] + ",";});
+}
 stream.on("irc.message",function(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
@@ -20,7 +42,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 				return;
 			}
 			stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
-			stream.emit("client.say",to,"\"" + d.title + "\" (" + myirc2.secToString(d.duration) + ") uploaded by " + d.uploader);
+			stream.emit("client.say",to,formatResult(d));
 		});
 	}
 	m = text.indexOf("youtu.be\/");
@@ -32,7 +54,7 @@ stream.on("irc.message",function(nick,to,text,message) {
 				return;
 			}
 			stream.emit("log", LOG_PREFIX+"Previewed link " + text + " in " + to);
-			stream.emit("client.say",to,"\"" + d.title + "\" (" + myirc2.secToString(d.duration) + ") uploaded by " + d.uploader);
+			stream.emit("client.say",to,formatResult(d));
 		});
 	}
 });
