@@ -36,7 +36,7 @@ var server = (function() {
 				plugins[name].process.kill('SIGKILL');
 			}
 		});
-		input.on("plugin.reset",function(name){
+		input.on("plugin.restart",function(name){
 			if(plugins.hasOwnProperty(name)) {
 				console.log("Restarting plugin: " + name);
 				console.log("Stopping plugin: " + name);
