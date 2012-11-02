@@ -1,5 +1,6 @@
 var myirc2 = require("../includes/myirc2-helper.js");
 var youtube = require("youtube-feeds");
+var time = require("time");
 var url = require("url");
 var config = myirc2.config;
 var stream = myirc2.getStream();
@@ -10,6 +11,8 @@ function formatResult(y) {
 		return "Unable to get result from Youtube.";
 	}
 	var res = ["\"",y.title,"\" (", myirc2.secToString(y.duration),") uploaded by ",y.uploader];
+	var uploaded = String(new time.Date(y.uploaded)).replace(/GMT(\+|-)\d+\s/,"");
+	res.push(" on ", uploaded);
 	if(y.hasOwnProperty("viewCount")) {
 		res.push(" - ",commaizeInt(y.viewCount)," views");
 	}
