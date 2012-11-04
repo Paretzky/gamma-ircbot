@@ -4,7 +4,8 @@ var stream = myirc2.getStream();
 var LOG_PREFIX = "plugins/regex.js:\t";
 var prev = {};
 stream.emit("log",LOG_PREFIX + "Starting");
-stream.on("irc.message",function(nick,to,text,message) {
+stream.on("irc.message",parseMessage);
+function parseMessage(nick,to,text,message) {
 	nick = unescape(nick);
 	to = unescape(to);
 	text = unescape(text);
@@ -19,52 +20,48 @@ stream.on("irc.message",function(nick,to,text,message) {
 		var escaped = false;
 		var replaceMode = false;
 		text.split("").forEach(function(e) {
+			if(replaceMode) {
+				replacement.push(e);
+				return;
+			}
 			if(e == "/") {
 				if(escaped) {
 					escaped = false;
-					if(replaceMode) {
-						replacement.push(e);
-					} else {
-						find.push(e);
-					}
+					find.push(e);
 				} else {
 					replaceMode = true;
+					return;
 				}
 			} else if(e == "\\") {
+				find.push(e);
 				if(escaped) {
 					escaped = false;
-					if(replaceMode) {
-						replacement.push(e);
-					} else {
-						find.push(e);
-					}
 				} else {
 					escaped = true;
-					if(replaceMode) {
-						replacement.push(e);
-					} else {
-						find.push(e);
-					}
 				}
 			} else {
 				escaped=false;
-				if(replaceMode) {
-					replacement.push(e);
-				} else {
-					find.push(e);
-				}
+				find.push(e);
 			}
 		});
-		var rString = find.join("");
+		
+		var fString = find.join("");	
+		var rString = replacement.join("");
+		var m = replacement.join("").match(/\s+\|\s+(s\/.+)/);
 		try {
-			var r = new RegExp(rString,"g");
+			var r = new RegExp(fString,"g");
 		} catch(e) { 
-			stream.emit("log",LOG_PREFIX+"Error with " + text + ". " + e + " regex: " + rString);
+			stream.emit("log",LOG_PREFIX+"Error with " + text + ". " + e + " regex: " + fString);
 			return; 
 		}
+		if(m != null) {
+			prev[to] = prev[to].replace(r,rString.substring(0,m.index));
+			parseMessage(nick,to,m[1],{});
+			return;
+		}
 		stream.emit("log",LOG_PREFIX+"Completed " + text);
-		stream.emit("client.say",to,prev[to].replace(r,replacement.join("")));
+		stream.emit("client.say",to,prev[to].replace(r,rString));
 		return;
 	}
 	prev[to] = text;
-});
+}
