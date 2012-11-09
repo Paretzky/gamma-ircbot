@@ -14,7 +14,38 @@ function parseMessage(nick,to,text,message) {
 	}
 	if(prev.hasOwnProperty(to) && text.match(/^s\//) != null) {
 		stream.emit("log",LOG_PREFIX + nick + " triggered in " + to + " with " + text + " on " + prev[to]);
-		text = text.substring(2);
+		text = text.substring(1);
+		var s = [];
+		var escaped = false;
+		var index = -1;
+		text.split("").forEach(function(e) {
+			if(e == "/" && !escaped) {
+				s.push([]);
+				index++;
+				return;
+			}
+			if(e == "\\") {
+				escaped = !escaped;
+			} else {
+				escaped = false;
+			}
+			s[index].push(e);
+			
+		});
+		var r;
+		try {
+			if(s.length == 2) {
+				r = new RegExp(s[0].join(""),"g");
+			} else if(s.length == 3) {
+				r = new RegExp(s[0].join(""),s[2].join(""));
+			}
+		} catch(e) {
+			stream.emit("log",LOG_PREFIX+"Error with " + text + ". " + e);
+			stream.emit("irc.message",to,"Error with " + text + ". " + e);
+		}
+		stream.emit("log",LOG_PREFIX+"Completed " + text);
+		stream.emit("client.say",to,prev[to].replace(r,s[1].join("")));
+		/*
 		var find = [];
 		var replacement = [];
 		var escaped = false;
@@ -62,6 +93,7 @@ function parseMessage(nick,to,text,message) {
 		stream.emit("log",LOG_PREFIX+"Completed " + text);
 		stream.emit("client.say",to,prev[to].replace(r,rString));
 		return;
+		*/
 	}
 	prev[to] = text;
 }
