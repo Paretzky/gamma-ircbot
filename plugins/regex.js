@@ -3,6 +3,7 @@ var config = myirc2.config;
 var stream = myirc2.getStream();
 var LOG_PREFIX = "plugins/regex.js:\t";
 var prev = {};
+var BACKLOG = 15;
 stream.emit("log",LOG_PREFIX + "Starting");
 stream.on("irc.message",parseMessage);
 function parseMessage(nick,to,text,message) {
@@ -44,7 +45,20 @@ function parseMessage(nick,to,text,message) {
 			stream.emit("irc.message",to,"Error with " + text + ". " + e);
 		}
 		stream.emit("log",LOG_PREFIX+"Completed " + text);
-		stream.emit("client.say",to,prev[to].replace(r,s[1].join("")));
+		var f;
+		var done = false;
+		prev[to].reverse().forEach(function(e) {
+			if(done) {
+				return;
+			}
+			f = e.replace(r,s[1].join(""));
+			if(f !== e) {
+				stream.emit("client.say",to,f);
+				done = true;
+				return;
+			}
+		});	
+		return;
 		/*
 		var find = [];
 		var replacement = [];
@@ -95,5 +109,12 @@ function parseMessage(nick,to,text,message) {
 		return;
 		*/
 	}
-	prev[to] = text;
+	if(prev.hasOwnProperty(to)) {
+		prev[to].push(text);
+		if(prev[to].length > BACKLOG) { 
+			prev[to].shift();
+		}
+	} else {
+		prev[to] = [text];
+	}
 }
